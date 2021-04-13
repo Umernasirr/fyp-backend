@@ -14,6 +14,8 @@ exports.register = asynchandler(async (req, res, next) => {
   // console.log(req.body.data);
   const { name, gender, email, password } = req.body.data;
 
+  console.log(name, "nameee");
+
   const emailVerificationCode = Math.floor(1000 + Math.random() * 9000);
 
   //Create user
