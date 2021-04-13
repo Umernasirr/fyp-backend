@@ -9,10 +9,10 @@ exports.protect = asyncHandler(async (req, res, next) => {
   console.log(req.headers, "req");
   let token;
   if (
-    req.headers.Authorization &&
-    req.headers.Authorization.startsWith("Bearer")
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.Authorization.split(" ")[1];
+    token = req.headers.authorization.split(" ")[1];
   }
 
   console.log(token, "token");
