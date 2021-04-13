@@ -11,8 +11,8 @@ const sendEmail = require(`../utils/sendEmail`);
 // @access Public
 exports.register = asynchandler(async (req, res, next) => {
   console.log(req);
-  console.log(req.body.data);
-  const { name, gender, email, password } = req.data;
+  // console.log(req.body.data);
+  const { name, gender, email, password } = req.body;
 
   const emailVerificationCode = Math.floor(1000 + Math.random() * 9000);
 
