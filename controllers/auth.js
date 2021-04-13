@@ -10,7 +10,9 @@ const sendEmail = require(`../utils/sendEmail`);
 //@route POST /api/v1/auth/register
 // @access Public
 exports.register = asynchandler(async (req, res, next) => {
-  const { name, gender, email, password } = req.body.data;
+  console.log(req.data);
+  console.log(req.body.data);
+  const { name, gender, email, password } = req.data;
 
   const emailVerificationCode = Math.floor(1000 + Math.random() * 9000);
 
