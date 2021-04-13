@@ -352,6 +352,43 @@ exports.verifyResetCode = asynchandler(async (req, res, next) => {
   }
 });
 
+// @desc Get users
+//@route POST /api/v1/auth/get-users
+// @access Public
+exports.getUsers = asynchandler(async (req, res, next) => {
+  // Get hashed token
+
+  const users = await User.find({});
+
+  if (!users) {
+    return next(new ErrorResponse("No Users exists", 400));
+  }
+
+  res.status(200).json({ success: true, users });
+
+  // if (
+  //   user.resetPasswordCode &&
+  //   user.resetPasswordCode &&
+  //   user.resetPasswordCode.toString() === req.body.resetPasswordCode.toString()
+  //   // user.resetPasswordExpire > Date.now()
+  // ) {
+  //   // Verify the  account
+
+  //   console.log(user);
+
+  //   user.resetPasswordCode = undefined;
+  //   user.resetPasswordExpire = undefined;
+  //   user.resetPasswordVerification = true;
+
+  //   await user.save();
+  //   console.log("comign here");
+
+  //   sendTokenResponse(user, 200, res);
+  // } else {
+  return next(new ErrorResponse("Invalid Reset Verification Code", 400));
+  // }
+});
+
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   //Create token

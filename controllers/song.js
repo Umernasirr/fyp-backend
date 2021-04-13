@@ -104,10 +104,17 @@ exports.getSongbyLyrics = asyncHandler(async (req, res, next) => {
       );
 
       if (dataa) {
+        const song = await Song.create({
+          description: req.body.description,
+          user: req.body._id,
+          url: song_url_from_api,
+          duration: dataa.duration,
+        });
         return res.status(200).json({
           success: true,
           data: song_url_from_api,
           duration: dataa.duration,
+          song: song,
         });
       }
 
