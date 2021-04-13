@@ -14,6 +14,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     token = req.headers.Authorization.split(" ")[1];
   }
 
+  console.log(token, "token");
   //Make sure token exists
   if (!token) {
     return next(new ErrorResponse("Not authorize to access this route", 401));
