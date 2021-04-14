@@ -253,7 +253,9 @@ exports.updatePassword = asynchandler(async (req, res, next) => {
 //@route PUT /api/v1/auth/updatepasswordaftercode
 // @access Private
 exports.updatePasswordAfterCode = asynchandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id).select("+password");
+  const user = await User.findOne({ email: req.body.email }).select(
+    "+password"
+  );
   console.log(user);
 
   if (user.resetPasswordVerification) {
