@@ -7,6 +7,7 @@ const {
   getUsers,
   forgetPassword,
   resendResetCode,
+  verifyResetCode,
 } = require("../controllers/auth");
 
 const { protect } = require("../middleware/auth");
@@ -17,5 +18,6 @@ router.post("/email-verification", protect, verifyEmail);
 router.get("/get-users", getUsers);
 router.post("/send-forget-password-verification-code", forgetPassword);
 router.put("/resend-forget-password-verification-code", resendResetCode);
+router.post("/verify-forget-password-verification-code", verifyResetCode);
 
 module.exports = router;
