@@ -22,6 +22,6 @@ router.post("/send-forget-password-verification-code", forgetPassword);
 router.put("/resend-forget-password-verification-code", resendResetCode);
 router.post("/verify-forget-password-verification-code", verifyResetCode);
 router.put("/update-password-after-verification-code", updatePasswordAfterCode);
-router.put("/resend-email-verification-code", resendVerificationCode);
+router.put("/resend-email-verification-code", protect, resendVerificationCode);
 
 module.exports = router;
