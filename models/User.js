@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  friends: {
+    type: [mongoose.Schema.ObjectId],
+    ref: "User",
+    required: true,
+  },
   resetPasswordVerification: false,
   emailVerificationCode: String,
   emailVerificationExpire: String,

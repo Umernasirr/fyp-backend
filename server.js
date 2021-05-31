@@ -21,6 +21,8 @@ const auth = require("./routes/auth");
 const song = require("./routes/song");
 const playlist = require("./routes/playlist");
 const post = require("./routes/post");
+const request = require("./routes/request");
+const vibe = require("./routes/vibe");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -79,6 +81,8 @@ if (cluster.isMaster) {
   app.use(`/api/v1/song`, song);
   app.use("/api/v1/playlist", playlist);
   app.use("/api/v1/post", post);
+  app.use("/api/v1/request", request);
+  app.use("/api/v1/vibe", vibe);
 
   console.log("Coming after route");
   app.use(errorHandler);

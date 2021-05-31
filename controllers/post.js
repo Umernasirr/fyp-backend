@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 const Post = require(`../models/Post`);
 
 const ErrorResponse = require(`../utils/errorResponse`);
@@ -14,7 +14,7 @@ exports.addPost = asynchandler(async (req, res, next) => {
     title,
     description,
     user,
-    url
+    url,
   });
 
   // sendTokenResponse(user, 200, res);
@@ -43,7 +43,7 @@ exports.getPost = asynchandler(async (req, res, next) => {
   if (post) {
     return res.status(200).json({ success: true, data: post });
   } else {
-    return next(new ErrorResponse('Could not find the post', 400));
+    return next(new ErrorResponse("Could not find the post", 400));
   }
 
   // sendTokenResponse(user, 200, res);
@@ -59,7 +59,7 @@ exports.deletePost = asynchandler(async (req, res, next) => {
   if (post) {
     return res.status(200).json({ success: true, data: post });
   } else {
-    return next(new ErrorResponse('Could not find the post', 400));
+    return next(new ErrorResponse("Could not find the post", 400));
   }
 
   // sendTokenResponse(user, 200, res);
