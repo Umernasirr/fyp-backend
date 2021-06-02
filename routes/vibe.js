@@ -4,6 +4,6 @@ const { createVibe } = require("../controllers/vibe");
 
 const { protect } = require("../middleware/auth");
 const { route } = require("./auth");
-router.post("/", protect, createVibe);
+router.post("/create-vibe", protect, createVibe);
 
 module.exports = router;
