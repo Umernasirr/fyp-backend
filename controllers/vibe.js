@@ -22,6 +22,7 @@ CLOUDINARY_URL =
 //@route POST /api/v1/vibe
 // @access Public
 exports.createVibe = asynchandler(async (req, res, next) => {
+  console.log(req)
   if (!req.files) {
     return next(new ErrorResponse(`Please upload a file`, 400));
   }
