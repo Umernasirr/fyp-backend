@@ -94,7 +94,10 @@ exports.createVibe = asynchandler(async (req, res, next) => {
   // sendTokenResponse(user, 200, res);
 });
 
-exports.createVibe = asynchandler(async (req, res, next) => {
+//@desc Get all vibes
+//@route GET /api/v1/vibe
+// @access Public
+exports.getVibes = asynchandler(async (req, res, next) => {
   const vibes = await Vibe.find({}).populate("user");
   return res.status(200).json({ success: true, data: vibes });
 });
