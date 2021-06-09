@@ -75,7 +75,7 @@ exports.createVibe = asynchandler(async (req, res, next) => {
               width: result.width,
               height: result.height,
               isMedia: true,
-            });
+            }).populate("user");
             return res.status(200).json({ success: true, data: vibe });
           });
         }
