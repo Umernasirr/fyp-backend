@@ -86,10 +86,15 @@ exports.createVibe = asynchandler(async (req, res, next) => {
       caption: req.body.caption,
       user: req.user._id,
       isMedia: false,
-    });
+    }).populate("user");
     return res.status(200).json({ success: true, data: vibe });
     // return res.status(200).json({ success: true, data: songData });
   }
 
   // sendTokenResponse(user, 200, res);
+});
+
+exports.createVibe = asynchandler(async (req, res, next) => {
+  const vibes = await Vibe.find({}).populate("user");
+  return res.status(200).json({ success: true, data: vibes });
 });
