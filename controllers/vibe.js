@@ -112,3 +112,25 @@ exports.getVibes = asynchandler(async (req, res, next) => {
   const vibes = await Vibe.find({}).populate("user");
   return res.status(200).json({ success: true, data: vibes });
 });
+
+//@desc like/unlike a  vibes
+//@route GET /api/v1/vibe/like/:id
+// @access Public
+exports.likeUnlikeVibe = asynchandler(async (req, res, next) => {
+  const vibe = await Vibe.findById(req.params.id);
+  //Check if the post has already been liked
+  if (
+    vibe.likes.filter((like) => like.user.toString() === req.user.id).length > 0
+  ) {
+    const removeIndex = vibe.likes
+      .map((like) => like.user.toString())
+      .indexOf(req.user.id);
+    vibe.likes.splice(removeIndex, 1);
+    await vibe.save();
+    return res.status(200).json({ success: true, data: vibe.likes });
+  } else {
+    vibe.likes.unshift({ user: req.user.id });
+    await vibe.save();
+    return res.status(200).json({ success: true, data: vibe.likes });
+  }
+});
