@@ -7,6 +7,7 @@ const cloudinary = require("cloudinary").v2;
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const Vibe = require("../models/Vibe");
+const User = require("../models/User");
 const fs = require("fs"); //use the file system to save the files on the server
 
 // @desc Upload photo for bootcamp
@@ -133,4 +134,49 @@ exports.likeUnlikeVibe = asynchandler(async (req, res, next) => {
     await vibe.save();
     return res.status(200).json({ success: true, data: vibe.likes });
   }
+});
+
+//@desc comment on a  vibes
+//@route GET /api/v1/vibe/comment/:id
+// @access Private
+exports.commentVibe = asynchandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("-password");
+  const vibe = await Vibe.findById(req.params.id);
+  const newComment = {
+    text: req.body.text,
+    name: user.name,
+    avatar: user.avatar,
+    user: req.user.id,
+  };
+  vibe.comments.unshift(newComment);
+  await vibe.save();
+  return res.status(200).json({ success: true, data: vibe.comments });
+});
+
+//@desc Delte comment on a  vibes
+//@route DELETE /api/v1/vibe/comment/:id/:commentId
+// @access Private
+exports.deleteCommentVibe = asynchandler(async (req, res, next) => {
+  const vibe = await Vibe.findById(req.params.id);
+  //Pull out comment
+  const comment = vibe.comments.find(
+    (comment) => comment.id === req.params.commentId
+  );
+  //Make sure comment exists
+  if (!comment) {
+    return res.status(404).json({ msg: "Comment does not exist" });
+  }
+  //Check user
+  if (comment.user.toString() !== req.user.id) {
+    return res.status(401).json({ msg: "User not authorized" });
+  }
+  //Get remove index
+  const removeIndex = vibe.comments
+    .map((comment) => comment.user.toString())
+    .indexOf(req.user.id);
+
+  vibe.comments.splice(removeIndex, 1);
+
+  await vibe.save();
+  return res.status(200).json({ success: true, data: vibe.comments });
 });

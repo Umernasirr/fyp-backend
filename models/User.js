@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  avatar: {
+    type: String,
+  },
   resetPasswordVerification: false,
   emailVerificationCode: String,
   emailVerificationExpire: String,
