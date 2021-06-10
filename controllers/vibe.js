@@ -31,7 +31,7 @@ exports.createVibe = asynchandler(async (req, res, next) => {
   // }
   const media = req.files.media;
   console.log(media);
-  if (req.files.media) {
+  if (req.files.media && media) {
     // return next(new ErrorResponse(`Please upload a song file`, 400));
 
     media.name = `media_${uuidv4()}${path.parse(req.files.media.name).ext}`;
@@ -75,19 +75,30 @@ exports.createVibe = asynchandler(async (req, res, next) => {
               width: result.width,
               height: result.height,
               isMedia: true,
-            }).populate("user");
-            return res.status(200).json({ success: true, data: vibe });
+            });
+            Vibe.findById(vibe._id)
+              .populate("user")
+              .then((resultquery) => {
+                return res
+                  .status(200)
+                  .json({ success: true, data: resultquery });
+              });
           });
         }
       }
     );
   } else {
+    console.log("coming in else");
     const vibe = await Vibe.create({
       caption: req.body.caption,
       user: req.user._id,
       isMedia: false,
-    }).populate("user");
-    return res.status(200).json({ success: true, data: vibe });
+    });
+    Vibe.findById(vibe._id)
+      .populate("user")
+      .then((result) => {
+        return res.status(200).json({ success: true, data: result });
+      });
     // return res.status(200).json({ success: true, data: songData });
   }
 
