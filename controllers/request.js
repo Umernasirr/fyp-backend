@@ -35,7 +35,7 @@ exports.acceptRequest = asynchandler(async (req, res, next) => {
         new: true,
       }
     ).populate("friends");
-    const deleteRequest = await Request.findByIdAndDelete(requestId);
+    // const deleteRequest = await Request.findByIdAndDelete(requestId);
     return res.status(200).json({ success: true, data: addToFriends });
   } else {
     return next(new ErrorResponse(`Request Not found`, 500));
