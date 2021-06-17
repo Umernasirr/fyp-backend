@@ -68,14 +68,28 @@ exports.getRequests = asynchandler(async (req, res, next) => {
   return res.status(200).json({ success: true, data: requests });
 });
 
-// //@desc Get All Friends
-// //@route GET /api/v1/request
-// // @access Private
-// exports.getRequests = asynchandler(async (req, res, next) => {
-//   // const { requestId } = req.body;
+//@desc Get All Friends
+//@route GET /api/v1/request/friends/:id
+// @access Private
+exports.getFriends = asynchandler(async (req, res, next) => {
+  const users = await User.findById(req.params.id)
+    .select("friends")
+    .populate("friends");
+  // const requests = await Request.find({ requestTo: req.user._id }).populate(
+  //   "requestBy"
+  // );
+  return res.status(200).json({ success: true, data: users });
+});
 
-//   const requests = await Request.find({ requestTo: req.user._id }).populate(
-//     "requestBy"
-//   );
-//   return res.status(200).json({ success: true, data: requests });
-// });
+//@desc Delete Friends
+//@route GET /api/v1/request/friends/:id
+// @access Private
+exports.getFriends = asynchandler(async (req, res, next) => {
+  const users = await User.findById(req.params.id)
+    .select("friends")
+    .populate("friends");
+  // const requests = await Request.find({ requestTo: req.user._id }).populate(
+  //   "requestBy"
+  // );
+  return res.status(200).json({ success: true, data: users });
+});
