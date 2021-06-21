@@ -34,7 +34,7 @@ exports.createVibe = asynchandler(async (req, res, next) => {
   console.log(media);
   if (req.files.media && media) {
     // return next(new ErrorResponse(`Please upload a song file`, 400));
-
+    // console.log("");
     media.name = `media_${uuidv4()}${path.parse(req.files.media.name).ext}`;
     let uploadLocation = path.resolve(
       process.env.FILE_UPLOAD_PATH + media.name
