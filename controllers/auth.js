@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 var mongoose = require("mongoose");
 const User = require(`../models/User`);
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 
 const ErrorResponse = require(`../utils/errorResponse`);
 const asynchandler = require(`../middleware/async`);
@@ -398,3 +400,49 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res.status(statusCode).json({ success: true, token, user });
 };
+
+// @desc Update an avatar
+//@route PUT /api/v1/auth/avatar
+// @access Public
+exports.changeAvatar = asynchandler(async (req, res, next) => {
+  const media = req.files.media;
+  console.log(media);
+  if (req.files.media) {
+    media.name = `media_${uuidv4()}${path.parse(req.files.media.name).ext}`;
+    let uploadLocation = path.resolve(
+      process.env.FILE_UPLOAD_PATH + media.name
+    );
+
+    // write the BLOB to the server as a file
+    fs.writeFileSync(
+      uploadLocation,
+      Buffer.from(new Uint8Array(req.files.media.data))
+    );
+    await cloudinary.uploader.upload(
+      uploadLocation,
+      {
+        resource_type: "image",
+        folder: "avatar/",
+
+        overwrite: true,
+      },
+      (error, result) => {
+        if (error) return next(new ErrorResponse(error, 500));
+        else {
+          fs.unlink(uploadLocation, async (deleteErr) => {
+            if (deleteErr) return next(new ErrorResponse(deleteErr, 500));
+
+            const user = req.user;
+
+            user.avatar = result.url;
+
+            await user.save();
+            return res
+              .status(200)
+              .json({ success: true, data: user, url: result.url });
+          });
+        }
+      }
+    );
+  }
+});
