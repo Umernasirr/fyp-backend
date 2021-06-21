@@ -113,7 +113,7 @@ exports.createVibe = asynchandler(async (req, res, next) => {
 //@route GET /api/v1/vibe
 // @access Public
 exports.getVibes = asynchandler(async (req, res, next) => {
-  const vibes = await Vibe.find({}).populate("user").sort({ updatedAt: -1 });
+  const vibes = await Vibe.find({}).populate("user").sort({ createdAt: -1 });
   return res.status(200).json({ success: true, data: vibes });
 });
 
