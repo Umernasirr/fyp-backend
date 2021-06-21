@@ -117,6 +117,14 @@ exports.getVibes = asynchandler(async (req, res, next) => {
   return res.status(200).json({ success: true, data: vibes });
 });
 
+// @desc Deleete a vibe
+//@route DELETE /api/v1/vibe/:id
+// @access Private
+exports.deleteVibe = asynchandler(async (req, res, next) => {
+  await Vibe.findByIdAndDelete(req.params.id);
+  res.status(200).json({ success: true, data: {} });
+});
+
 //@desc like/unlike a  vibes
 //@route GET /api/v1/vibe/like/:id
 // @access Public
