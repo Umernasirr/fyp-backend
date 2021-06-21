@@ -10,6 +10,7 @@ const {
   verifyResetCode,
   updatePasswordAfterCode,
   resendVerificationCode,
+  changeAvatar,
 } = require("../controllers/auth");
 
 const { protect } = require("../middleware/auth");
@@ -18,6 +19,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/email-verification", protect, verifyEmail);
 router.get("/get-users", getUsers);
+router.post("/avatar", protect, changeAvatar);
 router.post("/send-forget-password-verification-code", forgetPassword);
 router.put("/resend-forget-password-verification-code", resendResetCode);
 router.post("/verify-forget-password-verification-code", verifyResetCode);
