@@ -4,10 +4,20 @@ const User = require(`../models/User`);
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
 
 const ErrorResponse = require(`../utils/errorResponse`);
 const asynchandler = require(`../middleware/async`);
 const sendEmail = require(`../utils/sendEmail`);
+
+cloudinary.config({
+  cloud_name: "dkmctcivw",
+  api_key: "684775128763765",
+  api_secret: "SSNzQQozA412eYAEgUae502s4lg",
+});
+
+CLOUDINARY_URL =
+  "cloudinary://684775128763765:SSNzQQozA412eYAEgUae502s4lg@dkmctcivw";
 
 //@desc Register user
 //@route POST /api/v1/auth/register
