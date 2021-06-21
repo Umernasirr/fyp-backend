@@ -30,6 +30,9 @@ exports.createVibe = asynchandler(async (req, res, next) => {
   // if (!req.files) {
   //   return next(new ErrorResponse(`Please upload a file`, 400));
   // }
+  console.log(req, "req");
+  console.log(req.files, "fileeessss");
+  console.log("dsakdjksajdsa");
   const media = req.files.media;
   console.log(media);
   if (req.files.media && media) {
