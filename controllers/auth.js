@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 const User = require(`../models/User`);
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
+const path = require("path");
 
 const ErrorResponse = require(`../utils/errorResponse`);
 const asynchandler = require(`../middleware/async`);
