@@ -34,16 +34,16 @@ exports.acceptRequest = asynchandler(async (req, res, next) => {
 
   const request = await Request.findById(requestId);
   if (request) {
-    let request;
+    let requestt;
     if (request.requestBy.toString() === req.user._id.toString()) {
-      request = request.requestTo;
+      requestt = request.requestTo;
     } else {
-      request = request.requestBy;
+      requestt = request.requestBy;
     }
 
     const addToFriends = await User.findByIdAndUpdate(
       req.user._id,
-      { $push: { friends: request } },
+      { $push: { friends: requestt } },
       {
         new: true,
       }
