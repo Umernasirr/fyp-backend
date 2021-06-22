@@ -12,6 +12,7 @@ const {
   resendVerificationCode,
   changeAvatar,
   getMe,
+  updatePassword,
 } = require("../controllers/auth");
 
 const { protect } = require("../middleware/auth");
@@ -27,5 +28,6 @@ router.put("/resend-forget-password-verification-code", resendResetCode);
 router.post("/verify-forget-password-verification-code", verifyResetCode);
 router.put("/update-password-after-verification-code", updatePasswordAfterCode);
 router.put("/resend-email-verification-code", protect, resendVerificationCode);
+router.put("/reset-password", protect, updatePassword);
 
 module.exports = router;
