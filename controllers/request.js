@@ -127,6 +127,25 @@ exports.deleteFriends = asynchandler(async (req, res, next) => {
   req.user.friends.splice(removeIndex, 1);
 
   await req.user.save();
+
+  const friendUser = User.findById(req.params.friendId);
+  const otherFriend = friendUser.friends.find(
+    (friend) => friend.toString() === req.params.friendId.toString()
+  );
+  //Make sure comment exists
+  if (!otherFriend) {
+    return next(new ErrorResponse(`Friend doesnt exist`, 500));
+  }
+
+  //Get remove index
+  const removeIndex = friendUser.friends
+    .map((friend) => friend.toString())
+    .indexOf(req.params.friendId);
+
+  console.log(removeIndex, "remove index");
+  friendUser.friends.splice(removeIndex, 1);
+
+  await friendUser.save();
   // const user  = User.find({});
   const user = await User.findById(req.user._id);
   return res.status(200).json({ success: true, data: user });
