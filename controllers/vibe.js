@@ -143,6 +143,7 @@ exports.likeUnlikeVibe = asynchandler(async (req, res, next) => {
   } else {
     vibe.likes.unshift({ user: req.user.id });
     await vibe.save();
+    console.log(vibes.likes);
     return res.status(200).json({ success: true, data: vibe.likes });
   }
 });
