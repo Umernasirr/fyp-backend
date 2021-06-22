@@ -138,12 +138,12 @@ exports.deleteFriends = asynchandler(async (req, res, next) => {
   }
 
   //Get remove index
-  const removeIndex = friendUser.friends
+  const removeIndex1 = friendUser.friends
     .map((friend) => friend.toString())
     .indexOf(req.params.friendId);
 
-  console.log(removeIndex, "remove index");
-  friendUser.friends.splice(removeIndex, 1);
+  console.log(removeIndex1, "remove index");
+  friendUser.friends.splice(removeIndex1, 1);
 
   await friendUser.save();
   // const user  = User.find({});
