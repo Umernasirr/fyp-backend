@@ -250,6 +250,17 @@ exports.getMe = asynchandler(async (req, res) => {
   });
 });
 
+// @desc Update  user
+//@route PUT /api/v1/auth/users
+// @access Private/Admin
+exports.updateUser = asynchandler(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).json({ success: true, data: user });
+});
+
 // @desc Update password
 //@route PUT /api/v1/auth/updatepassword
 // @access Private
@@ -353,10 +364,7 @@ exports.verifyResetCode = asynchandler(async (req, res, next) => {
     user.resetPasswordCode &&
     user.resetPasswordCode &&
     user.resetPasswordCode.toString() === req.body.resetPasswordCode.toString()
-    // user.resetPasswordExpire > Date.now()
   ) {
-    // Verify the  account
-
     console.log(user);
 
     user.resetPasswordCode = undefined;
@@ -386,27 +394,7 @@ exports.getUsers = asynchandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, users });
 
-  // if (
-  //   user.resetPasswordCode &&
-  //   user.resetPasswordCode &&
-  //   user.resetPasswordCode.toString() === req.body.resetPasswordCode.toString()
-  //   // user.resetPasswordExpire > Date.now()
-  // ) {
-  //   // Verify the  account
-
-  //   console.log(user);
-
-  //   user.resetPasswordCode = undefined;
-  //   user.resetPasswordExpire = undefined;
-  //   user.resetPasswordVerification = true;
-
-  //   await user.save();
-  //   console.log("comign here");
-
-  //   sendTokenResponse(user, 200, res);
-  // } else {
   return next(new ErrorResponse("Invalid Reset Verification Code", 400));
-  // }
 });
 
 // Get token from model, create cookie and send response

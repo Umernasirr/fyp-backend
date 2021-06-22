@@ -13,6 +13,7 @@ const {
   changeAvatar,
   getMe,
   updatePassword,
+  updateUser,
 } = require("../controllers/auth");
 
 const { protect } = require("../middleware/auth");
@@ -29,5 +30,6 @@ router.post("/verify-forget-password-verification-code", verifyResetCode);
 router.put("/update-password-after-verification-code", updatePasswordAfterCode);
 router.put("/resend-email-verification-code", protect, resendVerificationCode);
 router.put("/reset-password", protect, updatePassword);
+router.put("/users", protect, updateUser);
 
 module.exports = router;
