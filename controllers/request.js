@@ -48,6 +48,14 @@ exports.acceptRequest = asynchandler(async (req, res, next) => {
         new: true,
       }
     ).populate("friends");
+
+    await User.findByIdAndUpdate(
+      requestt,
+      { $push: { friends: req.user._id } },
+      {
+        new: true,
+      }
+    );
     const deleteRequest = await Request.findByIdAndDelete(requestId);
     // const deleteRequest = await Request.findByIdAndDelete(requestId);
     return res.status(200).json({ success: true, data: addToFriends });
