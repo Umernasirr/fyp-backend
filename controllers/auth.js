@@ -241,9 +241,12 @@ exports.login = asynchandler(async (req, res, next) => {
 //@route POST /api/v1/auth/me
 // @access Private
 exports.getMe = asynchandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+    .select("+password")
+    .populate("friends");
   res.status(200).json({
     success: true,
-    user: req.user,
+    user: user,
   });
 });
 
