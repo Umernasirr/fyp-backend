@@ -26,16 +26,8 @@ CLOUDINARY_URL =
 //@route POST /api/v1/vibe
 // @access Public
 exports.createVibe = asynchandler(async (req, res, next) => {
-  // console.log(req);
-  // if (!req.files) {
-  //   return next(new ErrorResponse(`Please upload a file`, 400));
-  // }
-  console.log(req, "req");
-  console.log(req.files, "fileeessss");
-  console.log("dsakdjksajdsa");
-  const media = req.files.media;
-  console.log(media);
-  if (req.files.media && media) {
+  if (req.files) {
+    const media = req.files.media;
     // return next(new ErrorResponse(`Please upload a song file`, 400));
     // console.log("");
     media.name = `media_${uuidv4()}${path.parse(req.files.media.name).ext}`;
