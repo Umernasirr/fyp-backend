@@ -139,11 +139,12 @@ exports.likeUnlikeVibe = asynchandler(async (req, res, next) => {
       .indexOf(req.user.id);
     vibe.likes.splice(removeIndex, 1);
     await vibe.save();
+    console.log(vibe.likes, "in unlike");
     return res.status(200).json({ success: true, data: vibe.likes });
   } else {
     vibe.likes.unshift({ user: req.user.id });
     await vibe.save();
-    console.log(vibes.likes);
+    console.log(vibe.likes, "in like");
     return res.status(200).json({ success: true, data: vibe.likes });
   }
 });
