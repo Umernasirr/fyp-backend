@@ -6,6 +6,7 @@ const {
   deleteRequest,
   getRequests,
   getFriends,
+  deleteFriends,
 } = require("../controllers/request");
 
 const { protect } = require("../middleware/auth");
@@ -15,5 +16,6 @@ router.post("/accept", protect, acceptRequest);
 router.post("/delete", deleteRequest);
 router.get("/", protect, getRequests);
 router.get("/friends/:id", getFriends);
+router.delete("/friends/:friendId", protect, deleteFriends);
 
 module.exports = router;

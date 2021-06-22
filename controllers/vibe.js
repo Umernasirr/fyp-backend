@@ -35,7 +35,6 @@ exports.createVibe = asynchandler(async (req, res, next) => {
       process.env.FILE_UPLOAD_PATH + media.name
     );
 
-    // write the BLOB to the server as a file
     fs.writeFileSync(
       uploadLocation,
       Buffer.from(new Uint8Array(req.files.media.data))

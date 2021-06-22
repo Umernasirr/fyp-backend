@@ -103,15 +103,31 @@ exports.getFriends = asynchandler(async (req, res, next) => {
   return res.status(200).json({ success: true, data: users });
 });
 
-// //@desc Delete Friends
-// //@route GET /api/v1/request/friends/:id
-// // @access Private
-// exports.getFriends = asynchandler(async (req, res, next) => {
-//   const users = await User.findById(req.params.id)
-//     .select("friends")
-//     .populate("friends");
-//   // const requests = await Request.find({ requestTo: req.user._id }).populate(
-//   //   "requestBy"
-//   // );
-//   return res.status(200).json({ success: true, data: users });
-// });
+//@desc Delete Friends
+//@route GET /api/v1/request/friends/:id
+// @access Private
+exports.deleteFriends = asynchandler(async (req, res, next) => {
+  //Pull out comment
+  console.log(req.params.friendId);
+  const friend = req.user.friends.find(
+    (friend) => friend.toString() === req.params.friendId.toString()
+  );
+  console.log(friend, "friend");
+  //Make sure comment exists
+  if (!friend) {
+    return next(new ErrorResponse(`Friend doesnt exist`, 500));
+  }
+
+  //Get remove index
+  const removeIndex = req.user.friends
+    .map((friend) => friend.toString())
+    .indexOf(req.params.friendId);
+
+  console.log(removeIndex, "remove index");
+  req.user.friends.splice(removeIndex, 1);
+
+  await req.user.save();
+  // const user  = User.find({});
+  const user = await User.findById(req.user._id);
+  return res.status(200).json({ success: true, data: user });
+});
