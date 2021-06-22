@@ -11,6 +11,12 @@ const User = require("../models/User");
 exports.sendRequest = asynchandler(async (req, res, next) => {
   const { requestBy, requestTo } = req.body;
 
+  const isRequest = await Request.find({ requestBy, requestTo });
+  console.log(isRequest, "issre");
+
+  if (isRequest && isRequest.length > 0) {
+    return next(new ErrorResponse("Request is already sent.", 400));
+  }
   const request = await Request.create({
     requestBy,
     requestTo,
