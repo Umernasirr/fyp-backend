@@ -215,7 +215,9 @@ exports.login = asynchandler(async (req, res, next) => {
   }
 
   //Check for user
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email })
+    .select("+password")
+    .populate("friends");
 
   if (!user) {
     return next(
