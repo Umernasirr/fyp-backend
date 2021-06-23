@@ -185,3 +185,51 @@ exports.deleteCommentVibe = asynchandler(async (req, res, next) => {
   await vibe.save();
   return res.status(200).json({ success: true, data: vibe.comments });
 });
+
+//@desc Add to favourites
+//@route POST /api/v1/vibe/fav/:id
+// @access Private
+exports.addRemoveFavorites = asynchandler(async (req, res, next) => {
+  const vibe = await Vibe.findById(req.params.id);
+  if (
+    vibe.favorites.filter((fav) => fav.user.toString() === req.user.id).length >
+    0
+  ) {
+    const removeIndex = vibe.favorites
+      .map((fav) => fav.user.toString())
+      .indexOf(req.user.id);
+    vibe.favorites.splice(removeIndex, 1);
+    await vibe.save();
+    return res.status(200).json({ success: true, data: vibe.favorites });
+  } else {
+    vibe.favorites.unshift({ user: req.user.id });
+    console.log(req.user.id, "reqqq");
+    await vibe.save();
+    return res.status(200).json({ success: true, data: vibe });
+  }
+});
+
+//@desc Get All favourites
+//@route GET /api/v1/vibe/fav
+// @access Private
+exports.getFavorites = asynchandler(async (req, res, next) => {
+  const temp = [];
+  const vibe = await Vibe.find({})
+    .populate("user")
+    .sort({ createdAt: -1 })
+    .then((vibes) => {
+      // console.log(vib);
+      vibes.map((vib) => {
+        if (vib.favorites) {
+          vib.favorites.map((fav) => {
+            if (fav.user.toString() === req.user._id.toString()) {
+              temp.push(vib);
+            }
+          });
+        }
+      });
+    })
+    .then(() => {
+      return res.status(200).json({ success: true, data: temp });
+    });
+});

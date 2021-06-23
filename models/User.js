@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
   },
+
   resetPasswordVerification: false,
   emailVerificationCode: String,
   emailVerificationExpire: String,

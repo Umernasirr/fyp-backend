@@ -7,6 +7,8 @@ const {
   commentVibe,
   deleteCommentVibe,
   deleteVibe,
+  addRemoveFavorites,
+  getFavorites,
 } = require("../controllers/vibe");
 
 const { protect } = require("../middleware/auth");
@@ -18,5 +20,7 @@ router.get("/like/:id", protect, likeUnlikeVibe);
 router.delete("/:id", protect, deleteVibe);
 router.post("/comment/:id", protect, commentVibe);
 router.delete("/comment/:id/:commentId", protect, deleteCommentVibe);
+router.get("/fav/:id", protect, addRemoveFavorites);
+router.get("/fav", protect, getFavorites);
 // /api/v1/vibe/comment/:id
 module.exports = router;
