@@ -132,7 +132,7 @@ exports.deleteFriends = asynchandler(async (req, res, next) => {
   const friendUser = await User.findById(req.params.friendId);
   console.log(friendUser, "friend user");
   const otherFriend = friendUser.friends.find(
-    (friend) => friend.toString() === req.params.friendId.toString()
+    (friend) => friend.toString() === req.user._id.toString()
   );
   //Make sure comment exists
   if (!otherFriend) {
@@ -142,7 +142,7 @@ exports.deleteFriends = asynchandler(async (req, res, next) => {
   //Get remove index
   const removeIndex1 = friendUser.friends
     .map((friend) => friend.toString())
-    .indexOf(req.params.friendId);
+    .indexOf(req.user._id);
 
   console.log(removeIndex1, "remove index");
   friendUser.friends.splice(removeIndex1, 1);
