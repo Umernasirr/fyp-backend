@@ -89,9 +89,10 @@ exports.getSongbyLyrics = asyncHandler(async (req, res, next) => {
     .then(async (response) => {
       console.log("Cloudinary");
       console.log(response.data);
+      console.l;
       song_url_from_api = "";
       dataa = await cloudinary.uploader.upload(
-        "/home/remu/Desktop/FYP/fyp-model-backend/test.wav",
+        "/home/remu/dev/uni/fyp/fyp-model-backend/test.wav",
         {
           resource_type: "video",
           overwrite: true,
@@ -99,6 +100,9 @@ exports.getSongbyLyrics = asyncHandler(async (req, res, next) => {
         function (error, result) {
           if (result) {
             song_url_from_api = result.url;
+            console.log("result", result);
+          } else {
+            console.log("error", error);
           }
         }
       );
@@ -117,33 +121,6 @@ exports.getSongbyLyrics = asyncHandler(async (req, res, next) => {
           song: song,
         });
       }
-
-      // console.log(response);
-      // console.log();
-      // fs.
-      // var buf = new Buffer(response, 'base64'); // decode
-      // fs.writeFile('temp/test.wav', buf, function (err) {
-      //   if (err) {
-      //     console.log('err', err);
-      //   } else {
-      //     return res.json({ status: 'success' });
-      //   }
-      // });
-      // fs.writeFile('<fileName>',<contenet>, callbackFunction)
-      // console.log(response.data);
-      // let wav = new WaveFile(response.toString());
-      // console.log(wav.container);
-      // console.log(wav.chunkSize);
-      // console.log(wav.fmt.chunkId);
-      // console.log(response.toString())
-      // const test = fs.readFileSync(response);
-      // test.mv(`${process.env.FILE_UPLOAD_PATH}/test`, async err => {});
-      // const test = fs.writeFileSync('test.wav', response.data);
-      // const writer = new wav.FileWriter(response.data);
-
-      // writer.write(new Buffer(tone(220, 5))); // 220Hz for 5 seconds
-      // writer.end();
-      // console.log(test);
     })
     .catch((e) => {
       return next(
