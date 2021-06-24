@@ -84,9 +84,10 @@ exports.deleteRequest = asynchandler(async (req, res, next) => {
 exports.getRequests = asynchandler(async (req, res, next) => {
   // const { requestId } = req.body;
 
-  const requests = await Request.find({ requestTo: req.user._id }).populate(
-    "requestBy"
-  );
+  const requests = await Request.find({ requestTo: req.user._id }).populate({
+    path: "requestBy",
+    populate: { path: "friends" },
+  });
   return res.status(200).json({ success: true, data: requests });
 });
 
