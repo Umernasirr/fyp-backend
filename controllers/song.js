@@ -24,7 +24,7 @@ const asyncHandler = require("../middleware/async");
 exports.addSong = asynchandler(async (req, res, next) => {
   // const user = await User.findById(req.params.id);
   // console.log(req.body.text);
-  const user = req.body._id;
+  const user = req.user._id;
   console.log(user);
   if (!user) {
     return next(new ErrorResponse(`User not found`, 404));
@@ -60,7 +60,7 @@ exports.addSong = asynchandler(async (req, res, next) => {
     // await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
     const song = await Song.create({
       description: req.body.description,
-      user: req.body._id,
+      user: req.user._id,
       url: file.name,
     });
     return res.status(200).json({ success: true, data: song });
@@ -106,7 +106,7 @@ exports.getSongbyLyrics = asyncHandler(async (req, res, next) => {
       if (dataa) {
         const song = await Song.create({
           description: req.body.description,
-          user: req.body._id,
+          user: req.user._id,
           url: song_url_from_api,
           duration: dataa.duration,
         });

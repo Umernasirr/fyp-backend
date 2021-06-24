@@ -41,7 +41,6 @@ if (cluster.isMaster) {
   app.use(express.json());
   app.use(bodyParser.json());
 
-  console.log("coming here");
   // Dev logging middleware
   if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
