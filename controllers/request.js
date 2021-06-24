@@ -48,7 +48,7 @@ exports.acceptRequest = asynchandler(async (req, res, next) => {
         new: true,
       }
     ).populate("friends");
-
+    // console.log('request ')
     await User.findByIdAndUpdate(
       requestt,
       { $push: { friends: req.user._id } },
@@ -129,7 +129,8 @@ exports.deleteFriends = asynchandler(async (req, res, next) => {
 
   await req.user.save();
 
-  const friendUser = User.findById(req.params.friendId);
+  const friendUser = await User.findById(req.params.friendId);
+  console.log(friendUser, "friend user");
   const otherFriend = friendUser.friends.find(
     (friend) => friend.toString() === req.params.friendId.toString()
   );
