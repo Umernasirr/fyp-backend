@@ -92,7 +92,7 @@ if (cluster.isMaster) {
   const server = app.listen(
     PORT,
     console.log(
-      `Server running on in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
+      `Servdsdser running on in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
         .bold
     )
   );

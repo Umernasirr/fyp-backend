@@ -41,6 +41,7 @@ exports.register = asynchandler(async (req, res, next) => {
     emailVerificationCode: emailVerificationCode,
     emailVerificationExpire: Date.now() + 10 * 60 * 1000,
   });
+  console.log(user, 'user')
 
   if (user) {
     const message = `You are receiving this email because you
